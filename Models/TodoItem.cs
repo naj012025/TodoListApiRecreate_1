@@ -9,5 +9,23 @@
         public bool IsCompleted { get; private set; }
 
         public DateTime CreatedAtUtc { get; private set; }
+
+        private TodoItem()
+        {
+            //empty atm ef core can use this when materialisng rows.
+        }
+
+        public TodoItem(string title)
+        {
+            Title = title;
+            CreatedAtUtc = DateTime.UtcNow;
+        }
+
+        public void update(string title, bool isCompleted)
+        {
+            Title = title;
+            IsCompleted = isCompleted;
+        }
+
     }
 }
