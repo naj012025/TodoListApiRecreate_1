@@ -1,0 +1,5 @@
+﻿Learned a folder named infrastrucutre is common to have for setup of TerraForm and Hetzner for example
+
+Example dotnet command to gen a sshkey is: ssh-keygen -t ed25519 -N '' -C "" -f "ssh-key" 
+Addition to the ssh keycommand in the -N stands for new passphrase dont leave this empty its less secure
+'Secret here.' in the after the -C"Means to comment something here."
