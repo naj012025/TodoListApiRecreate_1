@@ -32,3 +32,5 @@ It was fixed with method on line 81.
 
 Had a issue in Program.cs on line 17. error was it had no correct using on Npgsql i thought i had installed the right Packaged
 turned out it was the postgress package i needed not hust the NpgSql.
+
+Had a error i mistook EF.Mvc but its is AspNetCore.Mvc in controllers so in the future if i dont find Mvc in list its probably aspnetcore
