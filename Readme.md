@@ -19,5 +19,16 @@ step3 in TodoRespons AFTER Get do init so data to user cant be change itsalread 
 Step 3{
 step1 using Microsofte.EntityframeworkCore; and the Using Project Name.Models at the top. 
 step2 Make a public Sealed class Name of cs file : DbContext. it inherits from efcore using here.
-step3 make model
+step3 Make the method u need.
 }
+
+Step 4{
+Step 1 Make TodoService.cs and add in Using Models/dto/data/EFCore paths.
+step 2 Make the maping etc you need this will be different ish per case but in this Todo its 5 Async task / one sealed private class of the _db and one public of hte db}
+
+### Reminder To Self.
+Had a issue in Services where Map had redline its beacuse it wasent created also learned some people create it at the end or in the beginning it doesnt matter.
+It was fixed with method on line 81.
+
+Had a issue in Program.cs on line 17. error was it had no correct using on Npgsql i thought i had installed the right Packaged
+turned out it was the postgress package i needed not hust the NpgSql.

@@ -2,6 +2,7 @@
 using Npgsql;
 using TodoListApiRecreate_1.Models;
 
+
 namespace TodoListApiRecreate_1.Data;
 
 public sealed class AppDbContext : DbContext
