@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Npgsql;
 using TodoListApiRecreate_1.Models;
 
 
