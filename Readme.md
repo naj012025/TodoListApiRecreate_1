@@ -51,3 +51,14 @@ Had Issues with making swagger because i installed the wrong nuget package notic
 Needed to fix ("{id:int}") in a Get that was duplicated name.
 Also Importnat if installed a new Nugetpacket that supposed to fix the issue and it doesnt restart VS that fixed it.
 
+
+###TodoWhenBored###
+1. Start PostgreSQL
+2. Create todo_db
+3. Verify connection string
+4. Create EF Core migration
+5. Run database update
+6. POST Todo again 
+
+These are the missing steps wich im gonna skip on this api beacuse not what im gonna practicse atm.
+
