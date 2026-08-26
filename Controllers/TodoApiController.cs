@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TodoListApiRecreate_1.Dto;
 using TodoListApiRecreate_1.Services;
+
 namespace TodoListApiRecreate_1.Controllers;
 
 [ApiController]
@@ -20,7 +21,7 @@ public sealed class TodoApiController : ControllerBase
         return Ok(await _service.GetAllAsync());
     }
 
-    [HttpGet]
+    [HttpGet("{id:int}")]// Important had a error here because i forgott ("{id:int}") and it was not a unique name so swagger couldt open properly.
     public async Task<ActionResult<TodoResponse>> GetById(int id)
     {
         TodoResponse? todo = await _service.GetByIdAsync(id);

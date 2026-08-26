@@ -51,7 +51,8 @@ public sealed class TodoService
         return Map(todo);
     }
 
-    public async Task<TodoResponse> UpdateAsync(
+    //Fixing the Retun null warning at line 61 i needed to add ? after <Todoresponse in line 55>
+    public async Task<TodoResponse?> UpdateAsync(
         int id, UpdateTodoRequest request)
     {
         TodoItem? todo = await _db.Todos.FindAsync(id);

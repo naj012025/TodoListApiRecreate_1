@@ -1,28 +1,32 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TodoListApiRecreate_1.Controllers;
+using Microsoft.OpenApi;
+using Swashbuckle.AspNetCore.Swagger;
 using TodoListApiRecreate_1.Data;
-using TodoListApiRecreate_1.Dto;
-using TodoListApiRecreate_1.Models;
-using TodoListApiRecreate_1.Services;
+
+
 
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
-
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddMvc();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConection")));
+        builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
+    //app.MapOpenApi(); // removed because extension not available in this target/framework
 }
 
 app.UseHttpsRedirection();
