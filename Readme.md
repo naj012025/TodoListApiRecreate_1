@@ -16,10 +16,18 @@ step2 In Create and update Tood Using System.CombonentModel.DataAnnotiations; an
 step3 in TodoRespons AFTER Get do init so data to user cant be change itsalread been initialized. Its a copy of the Model in this case.
 }
 
-Step 3{
+Step 3{Make DbContext in folder created at step 1.
 step1 using Microsofte.EntityframeworkCore; and the Using Project Name.Models at the top. 
 step2 Make a public Sealed class Name of cs file : DbContext. it inherits from efcore using here.
-step3 Make the method u need.
+step3 Make the method u need. This case DbSet<ToDoItem>Todos => Set<TodoItem>();
+Step4 Make ModelBuilder. Wich is protected override void OnModelCreating(Modelbuilder modelBuilder)
+{	//Etter Entity så henter den Todoitem ifra DbSet blokken du skrev før.
+	var todo = modelBuilder.Entity<TodoItem>();
+		todo.HasKey(x => x.Id)//Får kompilere til og vite hva x er henter id ifra Dto.
+		todo.Property(x => x.Title)
+		.HasMaxLength(200)
+		.IsRequired(); // dette er alt en linje med punktum etter x.title().something here().somehting here();
+}
 }
 
 Step 4{

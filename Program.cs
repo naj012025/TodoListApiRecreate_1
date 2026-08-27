@@ -12,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddMvc();
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<AppDb>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")));// important this must match the appsettings.json i had a spelling error.
 builder.Services.AddScoped<TodoService>();
