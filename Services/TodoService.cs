@@ -10,9 +10,9 @@ namespace TodoListApiRecreate_1.Services;
 //give it a second so compiler notices also.
 public sealed class TodoService
 {
-    private readonly AppDb _db;
+    private readonly AppDbContext _db;
 
-    public TodoService(AppDb db)
+    public TodoService(AppDbContext db)
     {
         _db = db;
     }
