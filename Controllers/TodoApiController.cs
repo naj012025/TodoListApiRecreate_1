@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TodoListApiRecreate_1.Dto;
 using TodoListApiRecreate_1.Services;
 
@@ -6,6 +8,7 @@ namespace TodoListApiRecreate_1.Controllers;
 
 [ApiController]
 [Route("api/todos")]
+[Authorize]
 public sealed class TodoApiController : ControllerBase
 {
     private readonly TodoService _service;
@@ -18,37 +21,58 @@ public sealed class TodoApiController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<TodoResponse>>> GetAll()
     {
-        return Ok(await _service.GetAllAsync());
+        int accountId = GetAccountId();
+
+        IReadOnlyList<TodoResponse> todos =
+            await _service.GetAllAsync(accountId);
+        return Ok(todos);
     }
 
     [HttpGet("{id:int}")]// Important had a error here because i forgott ("{id:int}") and it was not a unique name so swagger couldt open properly.
     public async Task<ActionResult<TodoResponse>> GetById(int id)
     {
-        TodoResponse? todo = await _service.GetByIdAsync(id);
+        int accountId = GetAccountId();
+
+
+        TodoResponse? todo = await _service.GetByIdAsync(accountId, id);
         return todo is null ? NotFound() : Ok(todo);
     }
 
     [HttpPost]
     public async Task<ActionResult<TodoResponse>> Create(CreateTodoRequest request)
     {
-        TodoResponse todo = await _service.CreateAsync(request);
-        return CreatedAtAction(
-            nameof(GetById),
-            new { id = todo.Id },
-            todo);
+        int accountId = GetAccountId();
+
+        TodoResponse todo =
+            await _service.CreateAsync(
+                accountId,
+                request);
+        return Ok(todo);
+
     }
 
     [HttpPut("{id:int}")]
     public async Task<ActionResult<TodoResponse>> Update(int id, UpdateTodoRequest request)
     {
-        TodoResponse? todo = await _service.UpdateAsync(id, request);
+        int accountId = GetAccountId();
+        TodoResponse? todo = await _service.UpdateAsync(accountId, id, request);
         return todo is null ? NotFound() : Ok(todo);
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        bool deleted = await _service.DeleteAsync(id);
+        int accountId = GetAccountId();
+        bool deleted = await _service.DeleteAsync(accountId, id);
         return deleted ? NoContent() : NotFound();
+    }
+
+    private int GetAccountId()
+    {
+        string value =
+            User.FindFirstValue(ClaimTypes.NameIdentifier)
+            ?? throw new UnauthorizedAccessException();
+
+        return int.Parse(value);
     }
 }
