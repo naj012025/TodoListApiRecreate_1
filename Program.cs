@@ -56,6 +56,23 @@ builder.Services
                         Encoding.UTF8.GetBytes(
                             builder.Configuration["Jwt:Key"]!))
             };
+
+        //this is to check where im failing in auth.
+        //options.Events = new JwtBearerEvents
+        //{
+        //    OnAuthenticationFailed = context =>
+        //    {
+        //        Console.WriteLine("JWT auth failed");
+        //        Console.WriteLine(context.Exception.Message);
+
+        //        return Task.CompletedTask;
+        //    },
+        //    OnTokenValidated = context =>
+        //    {
+        //        Console.WriteLine("JWT success");
+        //        return Task.CompletedTask;
+        //    }
+        //};
     });
 
 builder.Services.AddAuthorization();
