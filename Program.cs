@@ -8,6 +8,7 @@ using Microsoft.OpenApi;
 using Scalar.AspNetCore;
 using System.Text;
 using TodoListApiRecreate_1.Data;
+using TodoListApiRecreate_1.Dto;
 using TodoListApiRecreate_1.Services;
 
 
@@ -30,6 +31,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Services
 builder.Services.AddScoped<TodoService>();
+builder.Services.AddScoped<DashboardService>();
 
 
 // JWT Authentication
@@ -56,24 +58,36 @@ builder.Services
                         Encoding.UTF8.GetBytes(
                             builder.Configuration["Jwt:Key"]!))
             };
-
-        //this is to check where im failing in auth.
-        //options.Events = new JwtBearerEvents
-        //{
-        //    OnAuthenticationFailed = context =>
-        //    {
-        //        Console.WriteLine("JWT auth failed");
-        //        Console.WriteLine(context.Exception.Message);
-
-        //        return Task.CompletedTask;
-        //    },
-        //    OnTokenValidated = context =>
-        //    {
-        //        Console.WriteLine("JWT success");
-        //        return Task.CompletedTask;
-        //    }
-        //};
     });
+
+
+
+//this is to check where im failing in auth.
+//options.Events = new JwtBearerEvents
+//{
+//    OnAuthenticationFailed = context =>
+//    {
+//        Console.WriteLine("JWT auth failed");
+//        Console.WriteLine(context.Exception.Message);
+
+//        return Task.CompletedTask;
+//    },
+//    OnTokenValidated = context =>
+//    {
+//        Console.WriteLine("JWT success");
+//        return Task.CompletedTask;
+//    }
+//};
+
+builder.Services.AddHttpClient<AtmApiClient>(client =>
+{
+    string baseUrl =
+    builder.Configuration["Services:AtmApiBaseUrl"]
+    ?? throw new InvalidOperationException(
+        "Services:AtmApiBaseUrl is missing");
+
+    client.BaseAddress = new Uri(baseUrl);
+});
 
 builder.Services.AddAuthorization();
 
